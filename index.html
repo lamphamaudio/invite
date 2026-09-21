@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thân mời bạn đến lễ tốt nghiệp của Mai Hoa</title>
+<meta name="description" content="Mai Hoa thân mời bạn đến tham dự lễ tốt nghiệp.">
+<meta name="theme-color" content="#F4F1EC">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@900&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body>
+
+<main class="deck">
+
+  <section class="card card--cover">
+
+    <span class="card__tape" aria-hidden="true"></span>
+    <span class="card__torn" aria-hidden="true"></span>
+
+    <svg class="doodle doodle--star"  viewBox="0 0 40 40" aria-hidden="true"><use href="#d-star"/></svg>
+    <svg class="doodle doodle--curl"  viewBox="0 0 90 50" aria-hidden="true"><use href="#d-curl"/></svg>
+    <svg class="doodle doodle--sprig" viewBox="0 0 90 72" aria-hidden="true"><use href="#d-sprig"/></svg>
+
+    <div class="lines enter">
+
+      <p class="call call--tiny flanked">
+        <svg class="spark" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+        <span>Thư mời tham dự</span>
+        <svg class="spark spark--r" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+      </p>
+
+      <h1 class="shout shout--hero" id="shoutTitle"></h1>
+
+      <p class="call">
+        <span class="marked">của <span id="shoutName"></span><svg class="cap" viewBox="0 0 64 50" aria-hidden="true"><use href="#d-cap"/></svg>
+          <svg class="swoosh" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><use href="#d-swoosh"/></svg>
+        </span>
+      </p>
+
+    </div>
+
+    <!-- ba tấm ảnh đứng dọc mép dưới tấm thiệp -->
+    <div class="cast" id="cast" aria-hidden="true"></div>
+
+    <p class="cta-row enter-late">
+      <button class="openbtn" id="open" type="button">Mở thiệp</button>
+    </p>
+
+  </section>
+
+</main>
+
+<button class="music" id="music" type="button" aria-label="Bật nhạc" hidden>
+  <span class="music__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+  <span>Nhạc</span>
+</button>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/doodles.js"></script>
+<script src="assets/js/audio.js"></script>
+<script src="assets/js/page-home.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+/* Hallmark · studied-DNA · macrostructure: Poster Stack
+ * DNA-source: image (ảnh tham khảo người dùng gửi)
+ * paper: giấy nhàu trắng ngà · ink: đen than · accent: đỏ booc-đô
+ * axes: paper=light · display=heavy-condensed · accent=warm-red
+ */
+
+:root {
+
+  /* ---- Giấy ------------------------------------------------------------ */
+
+  --color-paper:    oklch(95.2% 0.009 85);   /* nền ngoài */
+  --color-card:     oklch(97.0% 0.007 88);   /* mặt thiệp */
+  --color-card-2:   oklch(93.5% 0.010 84);   /* bóng nếp gấp */
+
+  /* ---- Mực ------------------------------------------------------------- */
+
+  --color-ink:      oklch(24.0% 0.010 45);   /* đen than, ngả ấm */
+  --color-ink-2:    oklch(38.0% 0.012 45);   /* chữ phụ */
+  --color-ink-3:    oklch(58.0% 0.012 45);   /* nhãn mờ */
+
+  /* ---- Đỏ booc-đô ------------------------------------------------------ */
+
+  --color-red:      oklch(43.0% 0.155 25);
+  --color-red-deep: oklch(31.0% 0.120 25);   /* bóng đổ kiểu in lụa */
+  --color-red-soft: oklch(55.0% 0.140 22);   /* nét vẽ tay */
+  --color-red-wash: oklch(72.0% 0.095 24);   /* băng dính, mảnh xé */
+
+  --color-rule:     oklch(84.0% 0.012 80);
+  --color-focus:    oklch(38.0% 0.170 25);
+
+  /* ---- Vân giấy nhàu ---------------------------------------------------- *
+     feTurbulence sinh nhiễu, feDiffuseLighting biến nhiễu đó thành nếp gấp
+     có sáng có tối. Phủ lên mặt thiệp ở chế độ multiply là ra giấy vò. */
+
+  --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.022' numOctaves='5' seed='3' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23ffffff' surfaceScale='2.6'%3E%3CfeDistantLight azimuth='52' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='480' height='480' filter='url(%23p)'/%3E%3C/svg%3E");
+
+  /* ---- Chữ ------------------------------------------------------------- */
+
+  /* Anton: in hoa đậm hơi nén, có đủ dấu tiếng Việt.
+     Be Vietnam Pro: chữ thân, do người Việt thiết kế nên dấu rất chuẩn. */
+  --font-display: 'Anton', 'Be Vietnam Pro', system-ui, sans-serif;
+  /* dòng tiêu đề lớn: serif có chân, tương phản cao — theo ảnh mẫu */
+  --font-hero:    'Playfair Display', 'Times New Roman', serif;
+  --font-body:    'Be Vietnam Pro', system-ui, sans-serif;
+
+  /* thang 1.25 từ gốc 16px */
+  --text-xs:      0.64rem;
+  --text-sm:      0.8rem;
+  --text-base:    1rem;
+  --text-md:      1.25rem;
+  --text-lg:      1.5625rem;
+  --text-xl:      1.9531rem;
+  --text-2xl:     2.4414rem;
+  --text-3xl:     3.0518rem;
+
+  /* dòng chữ to nhất trên thiệp */
+  --text-shout:   clamp(2.4rem, 9.5vw, 5.4rem);
+  --text-shout-s: clamp(1.7rem, 6vw, 3.2rem);
+  --text-call:    clamp(1.2rem, 4vw, 2.1rem);
+
+  /* ---- Khoảng cách — thang 4pt ----------------------------------------- */
+
+  --space-2xs:  0.25rem;
+  --space-xs:   0.5rem;
+  --space-sm:   0.75rem;
+  --space-md:   1rem;
+  --space-lg:   1.5rem;
+  --space-xl:   2.5rem;
+  --space-2xl:  4rem;
+  --space-3xl:  6.5rem;
+
+  --measure:    38ch;
+  --gutter:     clamp(0.75rem, 3vw, 2.5rem);
+  --card-pad:   clamp(1.75rem, 6vw, 4.5rem);
+
+  /* ---- Chuyển động ------------------------------------------------------ */
+
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:      cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+
+  --dur-fast:   140ms;
+  --dur-base:   240ms;
+  --dur-slow:   560ms;
+  --dur-enter:  760ms;
+}

@@ -1,0 +1,831 @@
+/* Hallmark · studied-DNA · macrostructure: Poster Stack
+ * DNA-source: image (ảnh tham khảo người dùng gửi) — chỉ rút cấu trúc,
+ *   vân giấy và hoạ tiết đều vẽ lại bằng SVG
+ * paper: giấy nhàu · ink: đen than · accent: đỏ booc-đô (in lụa, có bóng lệch)
+ * type: Anton (in hoa đậm) + Be Vietnam Pro (chữ thân)
+ * pre-emit critique: P5 H5 E4 S5 R4 V5
+ */
+
+@import url('tokens.css');
+
+/* ============================================================
+   Nền
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-red);
+  color: var(--color-card);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   Thiệp — mỗi khối là một tấm giấy
+   ============================================================ */
+
+.deck {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-card);
+  padding: var(--card-pad);
+  text-align: center;
+  box-shadow: 0 2px 10px -4px oklch(24% 0.01 45 / 0.28);
+}
+
+/* vân giấy nhàu, sinh bằng bộ lọc SVG trong trang */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--paper-texture);
+  background-size: 480px 480px;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ---- băng dính washi góc trên trái ---- */
+
+.card__tape {
+  position: absolute;
+  top: clamp(4px, 1.4vw, 14px);
+  left: clamp(-34px, -5vw, -24px);
+  width: clamp(88px, 14vw, 132px);
+  height: clamp(20px, 3.2vw, 28px);
+  background: var(--color-red-wash);
+  opacity: 0.7;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  /* hai đầu răng cưa cho ra dáng băng xé tay */
+  clip-path: polygon(0 8%, 96% 0, 100% 46%, 94% 100%, 4% 92%, 0 52%);
+  pointer-events: none;
+}
+
+/* ---- mảnh giấy xé góc dưới phải ---- */
+
+.card__torn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(80px, 16vw, 170px);
+  height: clamp(40px, 6.5vw, 70px);
+  background: var(--color-red-wash);
+  opacity: 0.6;
+  clip-path: polygon(0 100%, 3% 78%, 13% 86%, 22% 72%, 31% 82%, 41% 66%, 52% 76%, 63% 60%, 73% 70%, 84% 54%, 93% 64%, 100% 48%, 100% 100%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Chữ
+   ============================================================ */
+
+.shout,
+.call {
+  font-family: var(--font-display);
+  font-weight: 400;          /* Anton chỉ có một độ đậm, vốn đã rất nặng */
+  text-transform: uppercase;
+  /* Tiếng Việt xếp dấu hai tầng (LỄ, Ệ, Ố) nên cần nhiều khoảng trên
+     hơn hẳn tiếng Anh — line-height dưới 1.1 là dấu chạm dòng trên. */
+  line-height: 1.26;
+  letter-spacing: 0.012em;
+  margin: 0;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.shout {
+  font-size: var(--text-shout);
+  color: var(--color-red);
+  /* bóng lệch kiểu in lụa lệch bản */
+  text-shadow: 3px 3px 0 var(--color-red-deep);
+}
+
+.shout--hero {
+  /* Dòng to nhất thiệp. Theo ảnh mẫu: serif có chân, viết hoa đầu từ
+     (KHÔNG in hoa toàn bộ), bóng đổ màu đen chứ không phải đỏ sẫm. */
+  font-family: var(--font-hero);
+  font-weight: 900;
+  text-transform: none;
+  font-size: clamp(1.9rem, 8.2vw, 5.5rem);
+  /* Playfair đặt dấu rất cao — line-height dưới 1.3 là dấu ngã, dấu mũ
+     tràn lên đè vào dòng chữ phía trên. */
+  line-height: 1.32;
+  letter-spacing: -0.012em;
+  text-shadow: 4px 4px 0 var(--color-ink);
+}
+
+.shout--sm {
+  font-size: var(--text-shout-s);
+  /* bóng mỏng hơn để dấu tiếng Việt không bị nhoè ở cỡ nhỏ */
+  text-shadow: 2px 2px 0 var(--color-red-deep);
+}
+
+.call {
+  font-size: var(--text-call);
+  color: var(--color-ink);
+}
+
+.call--tiny {
+  font-size: clamp(1rem, 3.4vw, 1.7rem);
+  letter-spacing: 0.01em;
+  /* ảnh mẫu viết hoa đầu câu, không in hoa cả dòng */
+  text-transform: none;
+}
+
+/* dòng chữ + gạch chân vẽ tay bên dưới */
+.marked {
+  display: inline-block;
+  position: relative;
+  /* chừa chỗ cho dấu nặng dưới chữ (Ệ, Ọ) rồi mới tới gạch chân */
+  padding-bottom: 0.30em;
+}
+
+.marked .swoosh {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: 0;
+  width: 104%;
+  height: 0.20em;
+  color: var(--color-red-soft);
+  pointer-events: none;
+}
+
+.body {
+  font-size: clamp(0.98rem, 2.4vw, 1.12rem);
+  line-height: 1.85;
+  color: var(--color-ink-2);
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.body p { margin: 0 0 var(--space-md); }
+.body p:last-child { margin-bottom: 0; }
+
+/* ---- xếp dòng trong một tấm thiệp ---- */
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.5rem, 1.6vw, 1rem);
+}
+
+.lines--loose { gap: clamp(0.9rem, 2.6vw, 1.6rem); }
+
+/* dòng có tia nắng hai bên */
+.flanked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.1rem);
+}
+
+.flanked .spark {
+  flex: none;
+  width: clamp(16px, 3.2vw, 28px);
+  height: clamp(24px, 4.6vw, 40px);
+  color: var(--color-red-soft);
+}
+
+.flanked .spark--r { transform: scaleX(-1); }
+
+/* ============================================================
+   Hoạ tiết vẽ tay
+   ============================================================ */
+
+.doodle {
+  position: absolute;
+  color: var(--color-red-soft);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.doodle--star  { top: 22%;  left: 5%;  width: clamp(20px, 3.4vw, 34px); }
+
+/* tiêu đề trang bìa chiếm gần hết bề ngang, hoạ tiết phải né ra rìa trên
+   và khoảng trống ngay trên dãy ảnh, nếu không sẽ đâm vào chữ */
+.card--cover .doodle--star  { top: 8%;  left: 6%; }
+
+/* Trên trang bìa, đáy tấm thiệp đã bị dãy ảnh chiếm — hoạ tiết phải
+   dời lên vùng chữ, nếu không sẽ nằm khuất sau ảnh. */
+.card--cover .doodle--curl  { top: 41%; bottom: auto; left: 4%; }
+.card--cover .doodle--sprig { top: 38%; bottom: auto; right: 4%; }
+.doodle--curl  { bottom: 16%; left: 4%; width: clamp(42px, 8vw, 78px); }
+.doodle--sprig { bottom: 20%; right: 5%; width: clamp(44px, 8.5vw, 84px); }
+.doodle--heart { bottom: 14%; left: 5%; width: clamp(48px, 9vw, 86px); }
+.doodle--bolt  { bottom: 30%; right: 6%; width: clamp(22px, 4vw, 38px); }
+
+/* mũ cử nhân cạnh tên */
+.cap {
+  width: clamp(34px, 7vw, 66px);
+  color: var(--color-red);
+  vertical-align: -0.12em;
+  margin-left: 0.12em;
+}
+
+/* ============================================================
+   Nút mở thiệp — khối đặc, bóng cứng kiểu in lụa
+   ============================================================ */
+
+.openbtn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 3vw, 1.45rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-card);
+  background: var(--color-red);
+  border: 0;
+  padding: clamp(0.65rem, 2vw, 0.9rem) clamp(1.4rem, 5vw, 2.6rem);
+  cursor: pointer;
+  transform: rotate(-1.4deg);
+  box-shadow: 5px 5px 0 var(--color-red-deep);
+  transition: transform var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+
+.openbtn:hover,
+.openbtn:focus-visible {
+  transform: rotate(-1.4deg) translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--color-red-deep);
+}
+
+.openbtn:active {
+  transform: rotate(-1.4deg) translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--color-red-deep);
+}
+
+.openbtn[disabled] { opacity: 0.6; cursor: default; }
+
+/* ============================================================
+   Thông tin buổi lễ
+   ============================================================ */
+
+.facts {
+  margin: 0;
+  display: grid;
+  gap: clamp(1.1rem, 3vw, 1.8rem);
+  text-align: center;
+}
+
+.fact { margin: 0; }
+
+.fact__label {
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 2vw, 0.86rem);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-red);
+  margin: 0 0 var(--space-2xs);
+}
+
+.fact__value {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.fact__sub {
+  display: block;
+  font-size: clamp(0.88rem, 2.3vw, 1rem);
+  font-weight: 400;
+  color: var(--color-ink-2);
+  margin-top: 0.15em;
+}
+
+.fact__link {
+  /* block + fit-content: luôn xuống dòng riêng, không dính vào cuối
+     dòng địa chỉ khi địa chỉ ngắt dòng trên màn hẹp */
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-red);
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 1px;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.fact__link:hover,
+.fact__link:focus-visible { opacity: 0.62; }
+
+/* ---- đếm ngược ---- */
+
+.countdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(0.8rem, 3vw, 1.8rem);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.cd__unit { display: flex; align-items: baseline; gap: 0.38em; }
+
+.cd__num {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 6vw, 2.9rem);
+  line-height: 1;
+  color: var(--color-red);
+  text-shadow: 2px 2px 0 var(--color-red-deep);
+}
+
+.cd__label {
+  font-size: clamp(0.78rem, 2.2vw, 0.9rem);
+  font-weight: 500;
+  color: var(--color-ink-3);
+}
+
+.cd__done {
+  font-family: var(--font-display);
+  font-size: var(--text-call);
+  text-transform: uppercase;
+  color: var(--color-red);
+  margin: 0;
+}
+
+/* ============================================================
+   Dãy ảnh đứng dọc mép dưới trang bìa
+   ============================================================ */
+
+.cast {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* tràn hết bề ngang tấm thiệp */
+  margin-inline: calc(var(--card-pad) * -1);
+  padding-inline: clamp(0.25rem, 1.5vw, 1rem);
+}
+
+.cast__item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cast__item img {
+  width: 100%;
+  display: block;
+}
+
+/* ---- kiểu 'print': ảnh chữ nhật, viền trắng như ảnh rọi ----
+   Ảnh chữ nhật thì KHÔNG cho chồng lên chữ — một khối trắng đè lên
+   tiêu đề trông như lỗi chứ không ra ý đồ. Cho nằm ngay dưới. */
+
+.cast[data-style='print'] {
+  gap: clamp(-10px, -1.2vw, 4px);
+  margin-top: clamp(1.4rem, 3.5vw, 2.4rem);
+  margin-bottom: calc(var(--card-pad) * -1);
+}
+
+.cast[data-style='print'] .cast__item {
+  max-width: 15rem;
+  background: var(--color-card);
+  padding: 7px 7px 0;
+  box-shadow: 0 3px 14px -7px oklch(24% 0.01 45 / 0.55);
+}
+
+.cast[data-style='print'] .cast__item img {
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  /* nhoè dần ở đáy để mép ảnh chìm vào mặt giấy */
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+}
+
+.cast[data-style='print'] .cast__item[data-slot='0'] { rotate: -2deg; translate: 0 6%; }
+.cast[data-style='print'] .cast__item[data-slot='2'] { rotate:  2deg; translate: 0 6%; }
+
+/* ---- kiểu 'cutout': ảnh đã tách nền — đúng như ảnh mẫu ----
+   Người đứng trên giấy, kéo lên chồng vào phần chân tiêu đề,
+   chân bị mép dưới tấm thiệp cắt ngang. */
+
+.cast[data-style='cutout'] {
+  gap: clamp(-56px, -5vw, -8px);
+  /* kéo lên đè vào chữ */
+  margin-top: clamp(-120px, -9vw, -30px);
+  margin-bottom: calc(var(--card-pad) * -1);
+}
+
+.cast[data-style='cutout'] .cast__item {
+  background: none;
+  padding: 0;
+}
+
+.cast[data-style='cutout'] .cast__item img {
+  /* width:auto là mấu chốt — để chiều cao quyết định, bề ngang chạy theo
+     tỉ lệ ảnh. Nếu đặt width:100% thì ô hẹp sẽ chặn, ảnh gần vuông bị
+     teo còn bằng bề rộng ô và người hoá ra bé xíu. */
+  width: auto;
+  max-width: 142%;
+  height: clamp(200px, 40vw, 430px);
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* tấm giữa đứng cao hơn hai tấm bên, đúng như ảnh mẫu */
+.cast[data-style='cutout'] .cast__item[data-slot='1'] img {
+  height: clamp(230px, 46vw, 495px);
+}
+
+/* ============================================================
+   Lịch tháng
+   ============================================================ */
+
+.cal {
+  width: 100%;
+  max-width: 34rem;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 1.5px solid var(--color-red);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.cal__head {
+  background: var(--color-red);
+  color: var(--color-card);
+  font-family: var(--font-display);
+  font-size: clamp(0.5rem, 1.9vw, 0.78rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.5em 0.1em;
+  line-height: 1.2;
+}
+
+.cal__cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 0.82;
+  border-top: 1px solid var(--color-red-wash);
+  border-right: 1px solid var(--color-red-wash);
+  color: var(--color-ink);
+}
+
+.cal__cell:nth-child(7n + 7) { border-right: 0; }
+
+.cal__so {
+  font-family: var(--font-body);
+  font-size: clamp(0.72rem, 2.6vw, 1.05rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* chủ nhật tô đỏ như bản gốc */
+.cal__cell--cn .cal__so { color: var(--color-red); }
+
+.cal__cell--trong { background: transparent; }
+
+/* ngày diễn ra lễ — khoanh bút đỏ */
+.cal__cell--le .cal__so { font-weight: 600; }
+
+.cal__khoanh {
+  position: absolute;
+  inset: 6%;
+  width: 88%;
+  height: 88%;
+  color: var(--color-red);
+  pointer-events: none;
+}
+
+/* dòng ghi chú giờ, đóng khung như viết tay */
+.note {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 3vw, 1.2rem);
+  font-weight: 500;
+  color: var(--color-ink);
+  border: 2px solid var(--color-red);
+  border-radius: 3px;
+  padding: 0.4em 1em;
+  margin: 0;
+  rotate: -1deg;
+}
+
+.note strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-red);
+  margin-right: 0.3em;
+}
+
+/* ============================================================
+   Sơ đồ trường
+   ============================================================ */
+
+.sodo {
+  margin: 0;
+  width: 100%;
+  max-width: 34rem;
+  background: var(--color-card);
+  padding: 8px;
+  box-shadow: 0 3px 14px -7px oklch(24% 0.01 45 / 0.5);
+  rotate: -0.6deg;
+}
+
+.sodo img { width: 100%; height: auto; display: block; }
+
+/* ============================================================
+   Ảnh kỷ niệm
+   ============================================================ */
+
+.snaps {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.8rem, 2.6vw, 1.4rem);
+  justify-items: center;
+  padding-top: var(--space-xs);
+}
+
+.snap {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  background: var(--color-card);
+  padding: 7px;
+  box-shadow: 0 3px 12px -6px oklch(24% 0.01 45 / 0.5);
+}
+
+.snap:nth-child(3n + 1) { rotate: -2deg; }
+.snap:nth-child(3n + 2) { rotate: 1.4deg; }
+.snap:nth-child(3n + 3) { rotate: -0.8deg; }
+
+/* bố cục: hàng 1 = 4 ảnh vuông, hàng 2 = 2 ảnh ngang rộng gấp đôi */
+.snap:nth-child(n + 5) { grid-column: span 2; }
+.snap:nth-child(n + 5) img { aspect-ratio: 4 / 3; }
+
+@media (min-width: 640px) {
+  .snaps { grid-template-columns: repeat(4, 1fr); }
+}
+
+.snap img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.snap__tape {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 54px;
+  height: 19px;
+  margin-left: -27px;
+  background: var(--color-red-wash);
+  opacity: 0.7;
+  rotate: -2deg;
+  clip-path: polygon(0 10%, 97% 0, 100% 50%, 96% 100%, 3% 90%, 0 48%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Nút nhạc
+   ============================================================ */
+
+.music {
+  position: fixed;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  border: 2px solid var(--color-ink);
+  background: var(--color-card);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--color-ink);
+  transition: transform var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+
+.music:hover,
+.music:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--color-ink);
+}
+
+.music__bars { display: flex; align-items: flex-end; gap: 2px; height: 10px; }
+
+.music__bars i { width: 2px; height: 3px; background: currentColor; }
+
+.music.is-on .music__bars i { animation: eq 1.05s var(--ease-in-out) infinite; }
+.music.is-on .music__bars i:nth-child(2) { animation-delay: 0.18s; }
+.music.is-on .music__bars i:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes eq {
+  0%, 100% { height: 3px; }
+  50%      { height: 10px; }
+}
+
+/* ============================================================
+   Về trang đầu
+   ============================================================ */
+
+.backlink {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+  text-decoration: none;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.backlink:hover,
+.backlink:focus-visible { color: var(--color-red); }
+
+/* ============================================================
+   Một lượt mở đầu duy nhất
+   ============================================================ */
+
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.enter > * {
+  opacity: 0;
+  animation: popIn var(--dur-enter) var(--ease-out) forwards;
+}
+
+.enter > *:nth-child(1) { animation-delay:  40ms; }
+.enter > *:nth-child(2) { animation-delay: 130ms; }
+.enter > *:nth-child(3) { animation-delay: 220ms; }
+.enter > *:nth-child(4) { animation-delay: 310ms; }
+.enter > *:nth-child(5) { animation-delay: 400ms; }
+.enter > *:nth-child(6) { animation-delay: 490ms; }
+.enter > *:nth-child(7) { animation-delay: 580ms; }
+
+.leaving {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-in);
+}
+
+/* ============================================================
+   Màn hẹp
+   ============================================================ */
+
+@media (max-width: 640px) {
+  /* hoạ tiết ở mép dễ đụng chữ trên màn hẹp — bỏ bớt */
+  .doodle--star,
+  .doodle--bolt { display: none; }
+
+  .doodle--curl,
+  .doodle--heart { left: 2%; opacity: 0.8; }
+
+  .doodle--sprig { right: 2%; opacity: 0.8; }
+
+  /* màn hẹp: ảnh nhỏ lại và chồng nhau nhiều hơn cho vừa ba tấm */
+  .cast { padding-inline: 0; }
+  .cast[data-style='print'] { gap: clamp(-14px, -2.5vw, -4px); margin-bottom: 0; }
+  .cast[data-style='print'] .cast__item { padding: 4px 4px 0; }
+  .cast[data-style='cutout'] { margin-bottom: 0; }
+
+}
+
+/* ============================================================
+   Giảm chuyển động
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .enter > * { opacity: 1; animation: none; }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+  }
+}
+
+/* hàng nút dưới mỗi tấm thiệp */
+.cta-row { margin: clamp(1.6rem, 4.5vw, 2.8rem) 0 0; }
+
+/* Trang bìa: dãy ảnh chiếm hết đáy tấm thiệp như ảnh mẫu, nên nút
+   được thả nổi đè lên ảnh thay vì chen vào giữa chữ và ảnh. */
+.card--cover .cta-row {
+  position: absolute;
+  /* KHÔNG căn giữa bằng translateX: hoạt ảnh vào trang kết thúc bằng
+     transform:none nên sẽ xoá mất, nút văng lệch sang phải. */
+  left: 0;
+  right: 0;
+  bottom: clamp(0.9rem, 3vw, 2.2rem);
+  z-index: 4;
+  margin: 0;
+}
+
+
+
+/* hiện sau khối chữ một nhịp */
+.enter-late {
+  opacity: 0;
+  animation: popIn var(--dur-enter) var(--ease-out) 560ms forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter-late { opacity: 1; animation: none; }
+}
+
+/* ============================================================
+   Ghi đè cho màn hẹp — phải đặt CUỐI file để thắng các quy tắc trên
+   ============================================================ */
+
+@media (max-width: 640px) {
+  /* Ảnh trên điện thoại chỉ rộng chừng 120px — nút thả nổi sẽ che gần hết
+     tấm giữa. Cho nút xuống hẳn dưới dãy ảnh. */
+  .card--cover .cta-row {
+    position: static;
+    margin-top: clamp(1.1rem, 4vw, 1.8rem);
+  }
+}
+
+/* ============================================================
+   Điện thoại — phần lớn người xem mở bằng máy này
+   ============================================================ */
+
+@media (max-width: 560px) {
+  /* Màn dọc thì để tiêu đề xuống hai dòng và to hẳn lên, đọc đã hơn nhiều
+     so với ép một dòng rồi còn 30px. Ảnh mẫu là khổ ngang nên mới vừa
+     một dòng. */
+  .shout--hero {
+    font-size: clamp(2.5rem, 14.5vw, 3.6rem);
+    line-height: 1.26;
+  }
+
+  .lines { gap: clamp(0.75rem, 3vw, 1.1rem); }
+
+  /* người đứng sát nhau hơn cho vừa ba tấm trên màn hẹp */
+  .cast[data-style='cutout'] { gap: clamp(-30px, -6vw, -12px); }
+  .cast[data-style='cutout'] .cast__item img { max-width: 155%; }
+}
+
+@media (max-width: 380px) {
+  /* máy nhỏ: bóp khoảng cách để đồng hồ đếm ngược vừa một dòng */
+  .countdown { gap: 0.55rem; }
+  .cd__num   { font-size: 1.5rem; }
+  .cd__label { font-size: 0.72rem; }
+}
+
+[hidden] { display: none !important; }
+
+/* sơ đồ: bỏ giới hạn bề ngang để ảnh phóng to hết khung */
+.sodo--full { max-width: none; padding: 6px; }

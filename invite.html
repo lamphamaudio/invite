@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lễ tốt nghiệp của Mai Hoa — thông tin</title>
+<meta name="description" content="Thời gian, sơ đồ đường đi và vài tấm ảnh.">
+<meta name="theme-color" content="#F4F1EC">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@900&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body>
+
+<main class="deck enter">
+
+  <!-- ---------- khung 1: thân mời ---------- -->
+
+  <section class="card">
+    <span class="card__tape" aria-hidden="true"></span>
+    <span class="card__torn" aria-hidden="true"></span>
+
+    <svg class="doodle doodle--star" viewBox="0 0 40 40" aria-hidden="true"><use href="#d-star"/></svg>
+    <svg class="doodle doodle--sprig" viewBox="0 0 90 72" aria-hidden="true"><use href="#d-sprig"/></svg>
+
+    <div class="lines">
+      <h1 class="shout">
+        <span class="marked"><span id="shoutName"></span><svg class="cap" viewBox="0 0 64 50" aria-hidden="true"><use href="#d-cap"/></svg>
+          <svg class="swoosh" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><use href="#d-swoosh"/></svg>
+        </span>
+      </h1>
+
+      <p class="call">Thân mời bạn</p>
+
+      <p class="call call--tiny flanked">
+        <svg class="spark" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+        <span>đến tham dự</span>
+        <svg class="spark spark--r" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+      </p>
+
+      <p class="shout shout--sm" id="shoutTitle"></p>
+
+      <p class="call">
+        <span class="marked">của mình
+          <svg class="swoosh" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><use href="#d-swoosh"/></svg>
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- khung 2: lịch ---------- -->
+
+  <section class="card">
+    <span class="card__torn" aria-hidden="true"></span>
+    <svg class="doodle doodle--heart" viewBox="0 0 96 60" aria-hidden="true"><use href="#d-heart"/></svg>
+
+    <div class="lines lines--loose">
+      <div class="lines" id="calHead">
+        <h2 class="shout shout--sm flanked">
+          <svg class="spark" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+          <span id="calThang"></span>
+          <svg class="spark spark--r" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+        </h2>
+        <p class="call call--tiny"><span aria-hidden="true">♡</span> <span id="calNam"></span> <span aria-hidden="true">♡</span></p>
+      </div>
+
+      <figure class="sodo" id="calFig" hidden>
+        <img id="calImg" alt="Lịch tháng, đã khoanh ngày diễn ra lễ">
+      </figure>
+
+      <div class="cal" id="cal" role="table" aria-label="Lịch tháng có khoanh ngày diễn ra lễ"></div>
+
+      <p class="note"><strong>Note:</strong> <span id="calGio"></span></p>
+
+      <div class="countdown" id="countdown" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ---------- khung 3: sơ đồ đường đi ---------- -->
+
+  <section class="card">
+    <span class="card__tape" aria-hidden="true"></span>
+
+    <div class="lines lines--loose">
+      <figure class="sodo sodo--full" id="sodo" hidden>
+        <img id="sodoImg" alt="Sơ đồ trường, đã khoanh vị trí hội trường">
+      </figure>
+
+      <dl class="facts">
+        <div class="fact" id="mapFact">
+          <dd class="fact__value">
+            <a class="fact__link" id="mapLink" target="_blank" rel="noopener">Mở bản đồ</a>
+          </dd>
+        </div>
+        <div class="fact">
+          <dt class="fact__label">Trang phục</dt>
+          <dd class="fact__value" id="dressCode"></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ---------- khung 4: một chặng đường ---------- -->
+
+  <section class="card">
+    <span class="card__torn" aria-hidden="true"></span>
+    <svg class="doodle doodle--bolt" viewBox="0 0 28 60" aria-hidden="true"><use href="#d-bolt"/></svg>
+
+    <div class="lines lines--loose">
+      <h2 class="shout shout--sm">
+        <span class="marked"><span id="storyTitle"></span>
+          <svg class="swoosh" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><use href="#d-swoosh"/></svg>
+        </span>
+      </h2>
+      <div class="body" id="storyBody"></div>
+
+      <figure class="sodo" id="storyFig" hidden>
+        <img id="storyImg" alt="Một chặng đường — khung ảnh kỷ niệm">
+      </figure>
+
+      <div class="snaps" id="snaps"></div>
+    </div>
+  </section>
+
+  <!-- ---------- khung 5: hẹn gặp ---------- -->
+
+  <section class="card">
+    <span class="card__torn" aria-hidden="true"></span>
+
+    <svg class="doodle doodle--curl" viewBox="0 0 90 50" aria-hidden="true"><use href="#d-curl"/></svg>
+    <svg class="doodle doodle--sprig" viewBox="0 0 90 72" aria-hidden="true"><use href="#d-sprig"/></svg>
+
+    <div class="lines">
+      <h2 class="shout flanked">
+        <svg class="spark" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+        <span id="closingTitle"></span>
+        <svg class="spark spark--r" viewBox="0 0 30 44" aria-hidden="true"><use href="#d-spark"/></svg>
+      </h2>
+
+      <p class="call" id="closingSub"></p>
+      <p class="body" id="closingLine" style="margin-top: 0.6rem;"></p>
+    </div>
+
+    <p class="cta-row">
+      <a class="backlink" href="index.html">← Về trang đầu</a>
+    </p>
+  </section>
+
+</main>
+
+<button class="music" id="music" type="button" aria-label="Bật nhạc" hidden>
+  <span class="music__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+  <span>Nhạc</span>
+</button>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/doodles.js"></script>
+<script src="assets/js/calendar.js"></script>
+<script src="assets/js/audio.js"></script>
+<script src="assets/js/page-invite.js"></script>
+
+</body>
+</html>
